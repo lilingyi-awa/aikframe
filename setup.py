@@ -3,7 +3,7 @@ import setuptools
 setuptools.setup(
     name="aikframe",
     packages=["aikframe"],
-    version="0.1.0",
+    version="0.1.1",
     description="Aikframe: 模块化云湖机器人开发框架",
     long_description=open("./README.md", "r", encoding="utf-8").read(),
     long_description_content_type="text/markdown",

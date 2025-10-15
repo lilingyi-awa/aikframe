@@ -12,7 +12,6 @@ def decode_msg(msg: dict):
                 session = SessionModel(recvId=event["chat"]["chatId"], recvType="group")
             # Content type
             if event["message"]["contentType"] in ["text", "html", "markdown"]:
-                print("EOK")
                 content = TextObjectModel(method=event["message"]["contentType"], text=event["message"]["content"]["text"])
             else:
                 return None
@@ -20,7 +19,7 @@ def decode_msg(msg: dict):
             return MessageModel(
                 type=mtype,
                 msgId=event["message"]["msgId"],
-                parentId=(None if event["message"]["parentId"] == "" else event["message"]["parentId"]),
+                parentId=(None if event["message"].get("parentId", "") == "" else event["message"]["parentId"]),
                 sender=SenderModel(
                     senderId=event["sender"]["senderId"],
                     senderLevel=("indenpendent" if (session.recvType == "user") else event["sender"]["senderUserLevel"])
