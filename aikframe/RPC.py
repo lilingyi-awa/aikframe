@@ -58,18 +58,31 @@ async def set_board(
             raise RuntimeError("Where is your yunhu token?")
         token = os.environ["YUNHU_API_TOKEN"]
     recvId, recvType = _normalize_to(to)
-    cebber = {
-        "chatId": recvId,
-        "chatType": recvType,
-        "contentType": method,
-        "content": content
-    }
-    async with aiohttp.ClientSession() as session:
-        result = await session.post(
-            url=f"https://chat-go.jwzhd.com/open-apis/v1/bot/board?token={token}",
-            json=cebber
-        )
-        return await result.json()
+    if content != "":
+        cebber = {
+            "chatId": recvId,
+            "chatType": recvType,
+            "contentType": method,
+            "content": content
+        }
+        async with aiohttp.ClientSession() as session:
+            result = await session.post(
+                url=f"https://chat-go.jwzhd.com/open-apis/v1/bot/board?token={token}",
+                json=cebber
+            )
+            return await result.json()
+    else:
+        cebber = {
+            "chatId": recvId,
+            "chatType": recvType,
+            "contentType": method
+        }
+        async with aiohttp.ClientSession() as session:
+            result = await session.post(
+                url=f"https://chat-go.jwzhd.com/open-apis/v1/bot/board-dismiss?token={token}",
+                json=cebber
+            )
+            return await result.json()
 
 def send_streaming_message(
         to: _To, *,
