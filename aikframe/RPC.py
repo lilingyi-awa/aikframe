@@ -20,7 +20,7 @@ async def send_message(
         to: _To, *,
         content: str,
         method: typing.Literal["text", "markdown", "html"],
-        buttons: dict = {},
+        buttons: list = [],
         parentId: typing.Optional[str] = None,
         token: typing.Optional[str] = None
     ):
